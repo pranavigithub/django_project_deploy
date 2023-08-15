@@ -1,0 +1,20 @@
+<!--{% for field in form %}-->
+<!--  <div class="fieldWrapper">-->
+<!--      {{ field.errors }}-->
+<!--      {{ field.label_tag }} {{ field }}-->
+<!--  </div>-->
+<!--{% endfor %}-->
+
+<form action="." method="post">
+    {% csrf_token %}
+    {% for field  in form %}
+      <div class ="fieldWrapper">
+          {{ field.errors }}
+          {{ field.lable_tag }} {{ field }}
+          {% if field.help_text %}
+          <p style="..." class="help">{{ field.help_text|safe }}</p>
+          {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit">Post</button>
+</form>

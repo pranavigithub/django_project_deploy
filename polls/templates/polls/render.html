@@ -1,0 +1,145 @@
+<!--
+{
+        "list":["Python", "Django", "selinium"],
+        "python":["2.7","3.8","3.10"],
+        "django":["2.3.1", "4.1.2"],
+        "user" :{
+            "first_name": "praveen",
+            "last_name":"Kumar",
+            "email":"praveen@gmail.com"
+        }
+      }
+-->
+{% extends "base.html" %}
+{% load static %}
+{% load number_tags %}
+{% block content %}
+<head>
+    <style>
+    table{
+          font-family:arial, sans-serif;
+          border-collapse: collapse;
+          width:100%;
+          }
+    td,th{
+          border:1px solid #dddddd;
+          text-align:left;
+          padding:8px;
+          }
+    tr:nth-child(even){
+          background-color:blue;
+          }
+
+
+    </style>
+</head>
+<!--
+d= {"a": 1, "b": 2}
+for i in d.items():
+    print(i, type(i))
+
+-->
+{% for each in data %}
+  <li>{{each}}</li>
+{% endfor %}
+
+<h3>1. requirement to display only keys of data</h3>
+{%for key in data %}
+  <li>{{key}}</li>
+{% endfor %}
+
+<h3>2. requirement to display only keys of data.keys</h3>
+{% for key in data.keys %}
+  <li>{{key}}</li>
+{% endfor %}
+
+<h3>3. requirement to display only values of data.items</h3>
+{% for key,value in data.items %}
+  <li>{{value}}</li>
+{% endfor %}
+
+<h6>**************************************</h6>
+
+{{data.list}}
+
+{% for each in data.list %}
+     <li>{{each}}</li>
+{% endfor %}
+
+<h6>*******************************************</h6>
+
+<h3>python</h3>
+{{data.python}}
+{% for tech in data.python %}
+  <li> {{tech}}</li>
+{% endfor %}
+
+<!--
+"user" :{
+            "first_name": "praveen",
+            "last_name":"Kumar",
+            "email":"praveen@gmail.com"
+            }
+-->
+
+<h3>3.Display both key and value</h3>
+{% for key,value in data.items %}
+  <li>{{key}}:{{value}}</li>
+{% endfor %}<br>
+
+<h3>4.Loop the "users"</h3>
+<h4>data.user.items</h4>
+<!--
+for key,value in data["user"].items():
+  print(key,value)
+-->
+{% for key,value in data.user.items %}
+ <li> {{key}}:{{value}}</li>
+{% endfor %}
+
+
+<h3>working on users</h3>
+{% for user in users %}
+ <li>{{user}}</li>
+{% endfor %}
+
+<h3>work each user </h3>
+{% for each in users %}
+  {% for key,value in each.items %}
+    <li>{{key}}:{{value}}</li>
+  {% endfor %}
+{% endfor %}
+
+<h3> Work on each user seperately</h3>
+{% for user in users %}
+<h6>**************************************</h6>
+  {% for key,value in user.items %}
+    <li>{{key}}:{{value}}</li>
+  {% endfor %}
+{% endfor %}
+
+<table>
+    <tr>
+        <th>S.No</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Full Name</th>
+        <th>Salary</th>
+        <th>Email</th>
+        <th>DOB</th>
+    </tr>
+
+    {% for user in users %}
+      <tr>
+          <td>{{forloop.counter|add:"10"}}</td>
+          <td>{{user.first_name}}</td>
+          <td>{{user.last_name}}</td>
+          <td>{{user.first_name|full_name:user.last_name}}</td>
+          <td>Rs.{{user.salary|to_amount }}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.dob|date:"D d M Y P"}}</td>
+
+      </tr>
+    {% endfor %}
+</table>
+{% endblock %}
